@@ -2,33 +2,44 @@ import { useState } from 'react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import TaskList from './TaskList';
+import './App.css';
 
 function App() {
   const [token, setToken] = useState(null);
 
   return (
-    <div>
+    <div className="app">
+
       <h1>TaskTrack</h1>
+
+      <p className="subtitle">
+        Manage your tasks efficiently
+      </p>
+
       {!token && (
-        <>
-          <RegisterForm />
-          <LoginForm onLoginSuccess={setToken} />
-        </>
+        <div className="auth-container">
+          <div className="card">
+            <h2>Create Account</h2>
+            <RegisterForm />
+          </div>
+
+          <div className="card">
+            <h2>Login</h2>
+            <LoginForm onLoginSuccess={setToken} />
+          </div>
+        </div>
       )}
 
-      {/* this is to get the token on screen}
-      {/*token && (
-        <>
-          <p>Logged in! Token: {token}</p>
-          <TaskList token={token} />
-        </>
-      )*/}
       {token && (
-  <>
-    <p>Logged in!</p>
-    <TaskList token={token} />
-  </>
-)}
+        <div className="dashboard">
+          <p className="welcome">
+            Welcome back 👋
+          </p>
+
+          <TaskList token={token} />
+        </div>
+      )}
+
     </div>
   );
 }
