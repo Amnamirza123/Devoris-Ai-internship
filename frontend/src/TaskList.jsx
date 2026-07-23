@@ -35,7 +35,7 @@ function TaskList({ token }) {
 
   async function handleDelete(taskId) {
     try {
-      await fetch(`http://localhost:3000/tasks/${taskId}`, {
+      await fetch(`https://tasktrack-v1w1.onrender.com/tasks/${taskId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -54,7 +54,7 @@ function TaskList({ token }) {
 
   async function handleUpdate(taskId) {
     try {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+      const response = await fetch(`https://tasktrack-v1w1.onrender.com/tasks/${taskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
