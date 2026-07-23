@@ -3,26 +3,32 @@ import { useState } from 'react';
 function LoginForm({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const response = await fetch('https://tasktrack-v1w1.onrender.com/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ useremail: email, password: password }),
-    });
+    setError('');
 
-    const data = await response.json();
+    try {
+      const response = await fetch('https://tasktrack-v1w1.onrender.com/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ useremail: email, password: password }),
+      });
 
-    if (!response.ok) {
-      setMessage('Incorrect credentials');
-      return;
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError('Incorrect credentials');
+        return;
+      }
+
+      onLoginSuccess(data.token);
+
+    } catch (err) {
+      setError('Something went wrong. Please try again.');
     }
-
-    setMessage('');
-    onLoginSuccess(data.token);
   }
 
   return (
@@ -43,9 +49,9 @@ function LoginForm({ onLoginSuccess }) {
 
       <button type="submit">Log In</button>
 
-      {message && (
+      {error && (
         <p style={{ color: 'red' }}>
-          {message}
+          {error}
         </p>
       )}
     </form>
