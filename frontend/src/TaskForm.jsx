@@ -9,7 +9,7 @@ function TaskForm({ token, onTaskCreated }) {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const response = await fetch('https://tasktrack-v1w1.onrender.comtasks', {
+    const response = await fetch('https://tasktrack-v1w1.onrender.com/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
