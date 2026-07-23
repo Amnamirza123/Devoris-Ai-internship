@@ -12,7 +12,7 @@ function TaskList({ token }) {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:3000/tasks', {
+    fetch('https://tasktrack-v1w1.onrender.com/tasks', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => {
