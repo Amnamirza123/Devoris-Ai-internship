@@ -8,7 +8,7 @@ function RegisterForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const response = await fetch('https://tasktrack-v1w1.onrender.com/tasksregister', {
+    const response = await fetch("https://tasktrack-v1w1.onrender.com/register", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, useremail: email, password }),
