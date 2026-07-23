@@ -3,6 +3,7 @@ import { useState } from 'react';
 function LoginForm({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -14,6 +15,13 @@ function LoginForm({ onLoginSuccess }) {
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      setMessage('Incorrect credentials');
+      return;
+    }
+
+    setMessage('');
     onLoginSuccess(data.token);
   }
 
@@ -25,13 +33,21 @@ function LoginForm({ onLoginSuccess }) {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
       />
+
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
+
       <button type="submit">Log In</button>
+
+      {message && (
+        <p style={{ color: 'red' }}>
+          {message}
+        </p>
+      )}
     </form>
   );
 }
