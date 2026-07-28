@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState } from 'react'; /* useState updates the changes on UI */
 
 function LoginForm({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(e) { /* async cause we will have to wait for backend to authorize and give JWT */
+    e.preventDefault(); /* e is event if smth happens on frontend ie login or registeration  e contain information about what changes happend */
 
     setError('');
 

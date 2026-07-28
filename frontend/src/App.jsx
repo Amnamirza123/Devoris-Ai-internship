@@ -25,12 +25,12 @@ function App() {
 
           <div className="card">
             <h2>Login</h2>
-            <LoginForm onLoginSuccess={setToken} />
+            <LoginForm onLoginSuccess={setToken} /> /* loginform component is using a function "settoken" and we'll save it as onloginsucess in our login page */
           </div>
         </div>
       )}
 
-      {token && (
+      {token && ( /*no ! mark here before token indicated it requires token to process further*/
         <div className="dashboard">
           <p className="welcome">
             Welcome back 👋
