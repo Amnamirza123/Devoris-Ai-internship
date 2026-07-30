@@ -1,0 +1,42 @@
+[
+  {
+    "prompt": "What is AI?",
+    "type": "general"
+  },
+  {
+    "prompt": "Explain machine learning in simple words.",
+    "type": "general"
+  },
+  {
+    "prompt": "What is the difference between AI and ML?",
+    "type": "general"
+  },
+  {
+    "prompt": "Explain neural networks.",
+    "type": "general"
+  },
+  {
+    "prompt": "What is Python used for?",
+    "type": "general"
+  },
+  {
+    "prompt": "Extract the email from: Contact me at john@gmail.com",
+    "type": "extraction"
+  },
+  {
+    "prompt": "Extract phone number: Call Ahmed at 03001234567",
+    "type": "extraction"
+  },
+  {
+    "prompt": "Summarize: Artificial intelligence helps computers perform tasks requiring human intelligence.",
+    "type": "general"
+  },
+  {
+    "prompt": "Explain APIs.",
+    "type": "general"
+  },
+  {
+    "prompt": "What is FastAPI?",
+    "type": "general"
+  }
+]
