@@ -26,7 +26,7 @@ def chat(request: ChatRequest):
             request.message,
             request.system_prompt
         ),
-        media_type="text/plain",
+        media_type="text/event-stream",
     )
 
 
