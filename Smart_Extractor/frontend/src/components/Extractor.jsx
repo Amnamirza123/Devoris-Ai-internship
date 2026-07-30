@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { extractText } from "./api";
-import "./Extractor.css";
+import "./extractor.css";
 
 function Extractor() {
 

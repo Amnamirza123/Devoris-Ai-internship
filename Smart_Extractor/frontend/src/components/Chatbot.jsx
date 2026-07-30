@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Chatbot.css";
+import "./chatbot.css";
 import ReactMarkdown from "react-markdown";
 
 function Chatbot() {
