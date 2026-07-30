@@ -19,55 +19,28 @@ PRICE_PER_1K_TOKENS = 0.0  # this model is free; set a real rate if switching mo
 
 def generate_chat_stream(session_id: str, message: str, system_prompt: str | None):
     system = system_prompt or chat_template["system"]
-
-    history = []
-
-    messages = [
-        {"role": "system", "content": system}
-    ] + history + [
+    history = get_history(session_id)
+    messages = [{"role": "system", "content": system}] + history + [
         {"role": "user", "content": message}
     ]
 
-    input_tokens = sum(
-        estimate_tokens(m["content"])
-        for m in messages
-    )
+    input_tokens = sum(estimate_tokens(m["content"]) for m in messages)
 
-    stream = client.chat.completions.create(
-        model=MODEL,
-        messages=messages,
-        stream=True
-    )
+    stream = client.chat.completions.create(model=MODEL, messages=messages, stream=True)
 
     full_reply = ""
-
     for chunk in stream:
         content = chunk.choices[0].delta.content
-
         if content:
             full_reply += content
             yield content
 
-
     output_tokens = estimate_tokens(full_reply)
+    cost = estimate_cost(input_tokens + output_tokens, PRICE_PER_1K_TOKENS)
+    save_turn(session_id, message, full_reply)
+    log_usage("chat", input_tokens, output_tokens, cost)
 
-    cost = estimate_cost(
-        input_tokens + output_tokens,
-        PRICE_PER_1K_TOKENS
-    )
-
-    save_turn(
-        session_id,
-        message,
-        full_reply
-    )
-
-    log_usage(
-        "chat",
-        input_tokens,
-        output_tokens,
-        cost
-    )
+    yield f"\n\n---\n[tokens: {input_tokens} in / {output_tokens} out | est. cost: ${cost}]"
 
 
 def extract_lead(text: str):
