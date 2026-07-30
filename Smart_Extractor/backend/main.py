@@ -18,11 +18,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.post("/chat")
 def chat(request: ChatRequest):
     return StreamingResponse(
-        generate_chat_stream(request.session_id, request.message, request.system_prompt),
+        generate_chat_stream(
+            request.session_id,
+            request.message,
+            request.system_prompt
+        ),
         media_type="text/plain",
     )
 
