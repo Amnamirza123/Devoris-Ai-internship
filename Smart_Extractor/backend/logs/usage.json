@@ -302,5 +302,21 @@
     "output_tokens": 6,
     "total_tokens": 104,
     "est_cost": 0.0
+  },
+  {
+    "timestamp": "2026-07-30T12:29:14.183817+00:00",
+    "endpoint": "chat",
+    "input_tokens": 16,
+    "output_tokens": 9,
+    "total_tokens": 25,
+    "est_cost": 0.0
+  },
+  {
+    "timestamp": "2026-07-30T12:37:55.252924+00:00",
+    "endpoint": "chat",
+    "input_tokens": 1759,
+    "output_tokens": 485,
+    "total_tokens": 2244,
+    "est_cost": 0.0
   }
 ]
