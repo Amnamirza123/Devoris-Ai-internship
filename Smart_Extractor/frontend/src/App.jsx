@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Chatbot from "./components/Chatbot";
 import Extractor from "./components/Extractor";
-import Home from "./components/Home";
+import Home from "./components/home";
 
 
 function App(){
