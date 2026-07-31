@@ -1,0 +1,34 @@
+.extractor-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #151a1f;
+  color: white;
+  border-radius: 12px;
+}
+
+.extractor-container textarea {
+  width: 100%;
+  height: 180px;
+  padding: 15px;
+  background: #0b0e12;
+  color: white;
+  border: 1px solid #333;
+  border-radius: 10px;
+}
+
+.extractor-container button {
+  margin-top: 15px;
+  padding: 12px 25px;
+  background: #4fd8c4;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: #0b0e12;
+  border-radius: 10px;
+}

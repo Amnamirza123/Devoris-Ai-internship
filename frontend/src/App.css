@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0b0e12;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* ---------- Auth screen ---------- */
+
+.auth-shell {
+  max-width: 380px;
+  margin: 80px auto;
+  background: #151a1f;
+  border: 1px solid #262d35;
+  border-radius: 14px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.auth-shell form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-shell input {
+  padding: 11px 14px;
+  background: #0b0e12;
+  border: 1px solid #262d35;
+  border-radius: 8px;
+  color: #e7ecef;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  outline: none;
+}
+
+.auth-shell input:focus {
+  border-color: #4fd8c4;
+}
+
+.auth-shell button {
+  padding: 11px;
+  background: #4fd8c4;
+  color: #0b0e12;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-switch {
+  margin-top: 16px;
+  color: #8b949c;
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.auth-switch:hover {
+  color: #4fd8c4;
+}
+
+/* ---------- Home / mode picker ---------- */
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #1d2935, #070a0e);
+  color: white;
+  padding: 20px;
+}
+
+.home-card {
+  width: 700px;
+  max-width: 100%;
+  padding: 50px;
+  text-align: center;
+  background: #111820;
+  border: 1px solid #26313b;
+  border-radius: 25px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+  font-size: 45px;
+}
+
+.home-card h1 {
+  font-size: 32px;
+  margin: 20px 0;
+}
+
+.subtitle {
+  color: #aab4bd;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.home-card h2 {
+  margin-top: 40px;
+  font-size: 20px;
+}
+
+.choice-container {
+  display: flex;
+  gap: 25px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.choice-card {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  text-align: left;
+  padding: 25px;
+  background: #151e27;
+  color: white;
+  border: 1px solid #2d3945;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.choice-card span {
+  font-size: 35px;
+}
+
+.choice-card h3 {
+  margin: 0 0 8px;
+}
+
+.choice-card p {
+  margin: 0;
+  color: #9ba7b1;
+  font-size: 13px;
+}
+
+.choice-card:hover {
+  transform: translateY(-6px);
+  border-color: #4fd8c4;
+  background: #19242e;
+}
+
+/* ---------- Mode bar (chat/extract screens) ---------- */
+
+.mode-bar {
+  padding: 16px 20px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.back-btn {
+  background: #151a1f;
+  border: 1px solid #262d35;
+  color: #8b949c;
+  padding: 8px 16px;
+  border-radius: 7px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  color: #4fd8c4;
+  border-color: #4fd8c4;
+}
