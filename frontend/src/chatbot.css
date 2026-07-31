@@ -78,3 +78,38 @@ button {
 }
 
 button:disabled { opacity: 0.5; cursor: not-allowed; }
+.message table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.message th,
+.message td {
+  border: 1px solid #262d35;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.message th {
+  background: #171d23;
+}
+
+.message code {
+  background: #0b0e12;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.message pre {
+  background: #0b0e12;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.message pre code {
+  background: none;
+  padding: 0;
+}

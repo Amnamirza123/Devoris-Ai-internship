@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
-import { useState } from 'react';
+import remarkGfm from 'remark-gfm';
+import { useState, useEffect, useRef } from 'react';
 import './chatbot.css';
 
 const API_URL = 'https://smart-extractor-backend.onrender.com';
@@ -9,6 +10,11 @@ function Chatbot({ token }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sessionId] = useState(() => crypto.randomUUID());
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   async function handleSend() {
     if (!message.trim() || loading) return;
@@ -82,24 +88,25 @@ function Chatbot({ token }) {
           </div>
         )}
         {messages.map((msg, i) => (
-         <div key={i} className={msg.role === 'user' ? 'message user' : 'message assistant'}>
-            <ReactMarkdown>{msg.content}</ReactMarkdown>
+          <div key={i} className={msg.role === 'user' ? 'message user' : 'message assistant'}>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
           </div>
         ))}
         {loading && <div className="message assistant">Thinking...</div>}
+        <div ref={messagesEndRef} />
       </div>
       <div className="input-area">
-       <textarea
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleSend();
-    }
-  }}
-         placeholder="Ask something..."
-/>
+        <textarea
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
+          placeholder="Ask something..."
+        />
         <button onClick={handleSend} disabled={loading}>
           {loading ? 'Thinking...' : 'Send'}
         </button>
