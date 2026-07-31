@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+<<<<<<< HEAD
 import Chatbot from './Chatbot';
 import Extractor from './Extractor';
+=======
+import TaskList from './TaskList';
+>>>>>>> 18f3828ee7fb9884f99719ee0d662a0189589820
 import './App.css';
 
 function App() {
   const [token, setToken] = useState(null);
+<<<<<<< HEAD
   const [showRegister, setShowRegister] = useState(false);
   const [mode, setMode] = useState(null); // null = show mode picker
 
@@ -77,6 +82,42 @@ function App() {
         </button>
       </div>
       {mode === 'chat' ? <Chatbot token={token} /> : <Extractor token={token} />}
+=======
+
+  return (
+    <div className="app">
+
+      <h1>TaskTrack</h1>
+
+      <p className="subtitle">
+        Manage your tasks efficiently
+      </p>
+
+      {!token && (
+        <div className="auth-container">
+          <div className="card">
+            <h2>Create Account</h2>
+            <RegisterForm />
+          </div>
+
+          <div className="card">
+            <h2>Login</h2>
+            <LoginForm onLoginSuccess={setToken} /> /* loginform component is using a function "settoken" and we'll save it as onloginsucess in our login page */
+          </div>
+        </div>
+      )}
+
+      {token && ( /*no ! mark here before token indicated it requires token to process further*/
+        <div className="dashboard">
+          <p className="welcome">
+            Welcome back 👋
+          </p>
+
+          <TaskList token={token} />
+        </div>
+      )}
+
+>>>>>>> 18f3828ee7fb9884f99719ee0d662a0189589820
     </div>
   );
 }

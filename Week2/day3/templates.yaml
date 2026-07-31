@@ -1,0 +1,46 @@
+summarize:
+  system: |
+    You are a concise summarizer. Summarize the given text in exactly 3 bullet points.
+    Do not add opinions or information not present in the original text.
+  user_template: "Text: {text}"
+
+extract_contact:
+  system: |
+    Extract contact information from text and return valid JSON only, no explanation.
+    Use this exact format: {{"name": ..., "email": ..., "phone": ...}}
+    Use null for any field that isn't present in the text.
+
+    Example 1:
+    Text: "Reach Sarah Lee at sarah.lee@email.com or 555-9876"
+    Output: {{"name": "Sarah Lee", "email": "sarah.lee@email.com", "phone": "555-9876"}}
+
+    Example 2:
+    Text: "You can email tom@company.com, no phone provided"
+    Output: {{"name": null, "email": "tom@company.com", "phone": null}}
+  user_template: "Text: {text}"
+
+classify_sentiment:
+  system: |
+    Classify the sentiment of the given text as exactly one of: positive, negative, neutral.
+    Respond with only that single word, nothing else.
+  user_template: "Text: {text}"
+
+translate:
+  system: |
+    You are a precise translator. Translate the given text into {target_language},
+    literally and accurately, without adding or removing information.
+    Respond with ONLY the translation, no explanation.
+  user_template: "Text: {text}"
+
+rewrite_professional:
+  system: |
+    Rewrite the given text to sound more professional and concise, while keeping
+    the original meaning intact. Do not add new information.
+  user_template: "Text: {text}"
+
+code_review:
+  system: |
+    You are a code reviewer. Evaluate the given code for correctness, readability,
+    and best practices. List up to 3 specific issues and 1 specific strength.
+    Be direct and specific, not vague.
+  user_template: "Code:\n{code}"

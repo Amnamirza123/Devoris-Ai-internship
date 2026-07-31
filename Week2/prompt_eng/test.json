@@ -1,0 +1,26 @@
+[
+    {
+        "text": "Contact Sarah Ahmed at sarah@gmail.com or call 03001234567",
+        "expected": {
+            "name": "Sarah Ahmed",
+            "email": "sarah@gmail.com",
+            "phone": "03001234567"
+        }
+    },
+    {
+        "text": "Ali can be reached at ali@yahoo.com",
+        "expected": {
+            "name": "Ali",
+            "email": "ali@yahoo.com",
+            "phone": null
+        }
+    },
+    {
+        "text": "Send an email to john@test.com. His phone is 5551234.",
+        "expected": {
+            "name": null,
+            "email": "john@test.com",
+            "phone": "5551234"
+        }
+    }
+]
