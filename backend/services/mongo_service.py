@@ -1,6 +1,6 @@
 import os
 from pymongo import MongoClient
-
+from zoneinfo import ZoneInfo
 mongo = MongoClient(os.getenv("MONGO_URI"))
 db = mongo["smart_extractor"]
 chats = db["chat_history"]
@@ -75,7 +75,8 @@ def list_user_sessions(user_id: str) -> list[dict]:
                 if item["has_custom_title"]:
                     result_by_id[item["session_id"]] = item["title"]
                 else:
-                    time_label = item["timestamp"].strftime("%b %d, %I:%M %p")
+                    local_time = item["timestamp"].astimezone(ZoneInfo("Asia/Lahore"))
+                    time_label = local_time.strftime("%b %d, %I:%M %p")
                     result_by_id[item["session_id"]] = f"{title} ({time_label})"
 
     return [
