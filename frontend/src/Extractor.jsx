@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './extractor.css';
 
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = 'https://smart-extractor-backend.onrender.com';
 
 function Extractor({ token }) {
   const [text, setText] = useState('');

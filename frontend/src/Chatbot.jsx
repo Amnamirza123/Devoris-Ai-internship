@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './chatbot.css';
 
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = 'https://smart-extractor-backend.onrender.com';
 
 function Chatbot({ token }) {
   const [message, setMessage] = useState('');
