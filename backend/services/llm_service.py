@@ -35,6 +35,7 @@ def generate_chat_stream(session_id: str, user_id: str, message: str, system_pro
         model=MODEL,
         messages=messages,
         stream=True,
+        extra_body={"reasoning": {"exclude": True}},
     )
 
     full_reply = ""

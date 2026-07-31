@@ -17,6 +17,8 @@ def verify_password(password: str, hashed: str) -> bool:
 
 
 def register_user(username: str, email: str, password: str) -> dict:
+    email = email.lower().strip()
+    
     if users.find_one({"email": email}):
         return {"error": "Email already registered"}
 
