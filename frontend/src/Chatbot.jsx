@@ -1,3 +1,4 @@
+import ReactMarkdown from 'react-markdown';
 import { useState } from 'react';
 import './chatbot.css';
 
@@ -81,18 +82,24 @@ function Chatbot({ token }) {
           </div>
         )}
         {messages.map((msg, i) => (
-          <div key={i} className={msg.role === 'user' ? 'message user' : 'message assistant'}>
-            {msg.content}
+         <div key={i} className={msg.role === 'user' ? 'message user' : 'message assistant'}>
+            <ReactMarkdown>{msg.content}</ReactMarkdown>
           </div>
         ))}
         {loading && <div className="message assistant">Thinking...</div>}
       </div>
       <div className="input-area">
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Ask something..."
-        />
+       <textarea
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+    }
+  }}
+         placeholder="Ask something..."
+/>
         <button onClick={handleSend} disabled={loading}>
           {loading ? 'Thinking...' : 'Send'}
         </button>
