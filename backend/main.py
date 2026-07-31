@@ -9,7 +9,7 @@ from fastapi.responses import StreamingResponse
 from schemas.extractor_schema import ChatRequest, ExtractRequest, RenameSessionRequest
 from schemas.auth_schema import RegisterRequest, LoginRequest
 from services.llm_service import generate_chat_stream, extract_lead
-from services.mongo_service import get_history, set_chat_title
+from services.mongo_service import get_history, set_chat_title, delete_chat_session
 from services.auth_service import register_user, login_user
 from services.auth_dependency import get_current_user
 
@@ -62,6 +62,13 @@ def chat_sessions(user: dict = Depends(get_current_user)):
 @app.get("/chat/{session_id}/history")
 def chat_history(session_id: str, user: dict = Depends(get_current_user)):
     return get_history(session_id, user["user_id"])
+
+@app.delete("/chat/{session_id}")
+def delete_session(session_id: str, user: dict = Depends(get_current_user)):
+    success = delete_chat_session(session_id, user["user_id"])
+    if not success:
+        raise HTTPException(status_code=404, detail="Session not found")
+    return {"session_id": session_id, "deleted": True}
 
 
 @app.post("/extract")

@@ -3,7 +3,7 @@ import './sidebar.css';
 
 const API_URL = 'https://smart-extractor-backend.onrender.com';
 
-function Sidebar({ token, activeSessionId, onSelectSession, onNewChat, refreshKey }) {
+function Sidebar({ token, activeSessionId, onSelectSession, onNewChat, onSessionDeleted, refreshKey }) {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -56,6 +56,28 @@ function Sidebar({ token, activeSessionId, onSelectSession, onNewChat, refreshKe
     }
   }
 
+  async function handleDelete(e, session) {
+    e.stopPropagation();
+    const confirmed = window.confirm(`Delete "${session.title}"? This can't be undone.`);
+    if (!confirmed) return;
+
+    setSessions((prev) => prev.filter((s) => s.session_id !== session.session_id));
+
+    try {
+      await fetch(`${API_URL}/chat/${session.session_id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch {
+      loadSessions();
+      return;
+    }
+
+    if (session.session_id === activeSessionId) {
+      onSessionDeleted();
+    }
+  }
+
   return (
     <div className="sidebar">
       <button className="new-chat-btn" onClick={onNewChat}>
@@ -92,6 +114,9 @@ function Sidebar({ token, activeSessionId, onSelectSession, onNewChat, refreshKe
                 <span className="session-actions">
                   <button className="icon-btn" title="Rename" onClick={(e) => startEditing(e, s)}>
                     ✏️
+                  </button>
+                  <button className="icon-btn" title="Delete" onClick={(e) => handleDelete(e, s)}>
+                    🗑️
                   </button>
                 </span>
               </>

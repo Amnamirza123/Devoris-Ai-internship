@@ -113,6 +113,7 @@ function Chatbot({ token }) {
         activeSessionId={sessionId}
         onSelectSession={handleSelectSession}
         onNewChat={handleNewChat}
+        onSessionDeleted={handleNewChat}
         refreshKey={refreshKey}
       />
 

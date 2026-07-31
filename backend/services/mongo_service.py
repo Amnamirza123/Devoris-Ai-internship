@@ -37,6 +37,10 @@ def set_chat_title(session_id: str, user_id: str, title: str) -> bool:
     )
     return result.matched_count > 0
 
+def delete_chat_session(session_id: str, user_id: str) -> bool:
+    result = chats.delete_one({"session_id": session_id, "user_id": user_id})
+    return result.deleted_count > 0
+
 
 def list_user_sessions(user_id: str) -> list[dict]:
     cursor = chats.find(
