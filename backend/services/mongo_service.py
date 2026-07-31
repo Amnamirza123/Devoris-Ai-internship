@@ -75,7 +75,8 @@ def list_user_sessions(user_id: str) -> list[dict]:
                 if item["has_custom_title"]:
                     result_by_id[item["session_id"]] = item["title"]
                 else:
-                    local_time = item["timestamp"].astimezone(ZoneInfo("Asia/Lahore"))
+                    local_time = item["timestamp"].astimezone(ZoneInfo("Asia/Karachi" \
+                    ""))
                     time_label = local_time.strftime("%b %d, %I:%M %p")
                     result_by_id[item["session_id"]] = f"{title} ({time_label})"
 
