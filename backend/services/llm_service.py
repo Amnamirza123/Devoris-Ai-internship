@@ -20,9 +20,9 @@ MODEL = "inclusionai/ling-3.0-flash:free"
 PRICE_PER_1K_TOKENS = 0.0
 
 
-def generate_chat_stream(session_id: str, message: str, system_prompt: str | None):
+def generate_chat_stream(session_id: str, user_id: str, message: str, system_prompt: str | None):
     system = system_prompt or chat_template["system"]
-    history = get_history(session_id)
+    history = get_history(session_id, user_id)
 
     messages = [{"role": "system", "content": system}]
     for m in history:
@@ -47,7 +47,7 @@ def generate_chat_stream(session_id: str, message: str, system_prompt: str | Non
     output_tokens = estimate_tokens(full_reply)
     cost = estimate_cost(input_tokens + output_tokens, PRICE_PER_1K_TOKENS)
 
-    save_turn(session_id, message, full_reply)
+    save_turn(session_id, user_id, message, full_reply)
     log_usage("chat", input_tokens, output_tokens, cost)
 
     yield f"\n\n---\n[tokens: {input_tokens} in / {output_tokens} out | est. cost: ${cost}]"

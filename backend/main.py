@@ -1,3 +1,4 @@
+from services.mongo_service import get_history, list_user_sessions
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -39,14 +40,19 @@ def login(request: LoginRequest):
 @app.post("/chat")
 def chat(request: ChatRequest, user: dict = Depends(get_current_user)):
     return StreamingResponse(
-        generate_chat_stream(request.session_id, request.message, request.system_prompt),
+        generate_chat_stream(request.session_id, user["user_id"], request.message, request.system_prompt),
         media_type="text/plain",
     )
 
 
+@app.get("/chat/sessions")
+def chat_sessions(user: dict = Depends(get_current_user)):
+    return list_user_sessions(user["user_id"])
+
+
 @app.get("/chat/{session_id}/history")
 def chat_history(session_id: str, user: dict = Depends(get_current_user)):
-    return get_history(session_id)
+    return get_history(session_id, user["user_id"])
 
 
 @app.post("/extract")

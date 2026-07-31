@@ -1,14 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-.chat-container {
+.chat-layout {
   height: 100vh;
+  display: flex;
+}
+
+.chat-container {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   background: #0b0e12;
   color: #e7ecef;
   font-family: Inter, sans-serif;
 }
-
 .messages {
   flex: 1;
   overflow-y: auto;
