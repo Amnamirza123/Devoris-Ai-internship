@@ -2,14 +2,14 @@ from services.mongo_service import get_history, list_user_sessions
 from dotenv import load_dotenv
 load_dotenv()
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 
-from schemas.extractor_schema import ChatRequest, ExtractRequest
+from schemas.extractor_schema import ChatRequest, ExtractRequest, RenameSessionRequest
 from schemas.auth_schema import RegisterRequest, LoginRequest
 from services.llm_service import generate_chat_stream, extract_lead
-from services.mongo_service import get_history
+from services.mongo_service import get_history, set_chat_title
 from services.auth_service import register_user, login_user
 from services.auth_dependency import get_current_user
 
@@ -43,6 +43,15 @@ def chat(request: ChatRequest, user: dict = Depends(get_current_user)):
         generate_chat_stream(request.session_id, user["user_id"], request.message, request.system_prompt),
         media_type="text/plain",
     )
+@app.patch("/chat/{session_id}/rename")
+def rename_session(session_id: str, request: RenameSessionRequest, user: dict = Depends(get_current_user)):
+    title = request.title.strip()
+    if not title:
+        raise HTTPException(status_code=400, detail="Title cannot be empty")
+    success = set_chat_title(session_id, user["user_id"], title)
+    if not success:
+        raise HTTPException(status_code=404, detail="Session not found")
+    return {"session_id": session_id, "title": title}
 
 
 @app.get("/chat/sessions")

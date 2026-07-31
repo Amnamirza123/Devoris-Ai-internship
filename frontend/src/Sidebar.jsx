@@ -6,26 +6,55 @@ const API_URL = 'https://smart-extractor-backend.onrender.com';
 function Sidebar({ token, activeSessionId, onSelectSession, onNewChat, refreshKey }) {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState(null);
+  const [editValue, setEditValue] = useState('');
 
   useEffect(() => {
-    async function loadSessions() {
-      setLoading(true);
-      try {
-        const res = await fetch(`${API_URL}/chat/sessions`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setSessions(data);
-        }
-      } catch {
-        // sidebar just stays empty if this fails
-      } finally {
-        setLoading(false);
-      }
-    }
     loadSessions();
   }, [token, refreshKey]);
+
+  async function loadSessions() {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/chat/sessions`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        setSessions(await res.json());
+      }
+    } catch {
+      // sidebar stays empty
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function startEditing(e, session) {
+    e.stopPropagation();
+    setEditingId(session.session_id);
+    setEditValue(session.title);
+  }
+
+  async function saveRename(sessionId) {
+    const title = editValue.trim();
+    setEditingId(null);
+    if (!title) return;
+
+    setSessions((prev) => prev.map((s) => (s.session_id === sessionId ? { ...s, title } : s)));
+
+    try {
+      await fetch(`${API_URL}/chat/${sessionId}/rename`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ title }),
+      });
+    } catch {
+      loadSessions();
+    }
+  }
 
   return (
     <div className="sidebar">
@@ -42,9 +71,31 @@ function Sidebar({ token, activeSessionId, onSelectSession, onNewChat, refreshKe
           <div
             key={s.session_id}
             className={s.session_id === activeSessionId ? 'session-item active' : 'session-item'}
-            onClick={() => onSelectSession(s.session_id)}
+            onClick={() => editingId !== s.session_id && onSelectSession(s.session_id)}
           >
-            {s.title}
+            {editingId === s.session_id ? (
+              <input
+                className="session-rename-input"
+                value={editValue}
+                autoFocus
+                onClick={(e) => e.stopPropagation()}
+                onChange={(e) => setEditValue(e.target.value)}
+                onBlur={() => saveRename(s.session_id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') saveRename(s.session_id);
+                  if (e.key === 'Escape') setEditingId(null);
+                }}
+              />
+            ) : (
+              <>
+                <span className="session-title">{s.title}</span>
+                <span className="session-actions">
+                  <button className="icon-btn" title="Rename" onClick={(e) => startEditing(e, s)}>
+                    ✏️
+                  </button>
+                </span>
+              </>
+            )}
           </div>
         ))}
       </div>

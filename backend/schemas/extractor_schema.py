@@ -16,3 +16,6 @@ class LeadInfo(BaseModel):
 
 class ExtractRequest(BaseModel):
     text: str
+
+class RenameSessionRequest(BaseModel):
+    title: str
