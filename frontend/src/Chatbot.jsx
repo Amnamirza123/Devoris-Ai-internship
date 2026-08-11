@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Sidebar from './Sidebar';
 import './chatbot.css';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = 'https://smart-extractor-frontend-nfem.onrender.com';
 
 function Chatbot({ token }) {
   const [message, setMessage] = useState('');
