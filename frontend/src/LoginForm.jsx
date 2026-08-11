@@ -6,10 +6,12 @@ function LoginForm({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
       const res = await fetch(`${API_URL}/login`, {
@@ -26,15 +28,19 @@ function LoginForm({ onLoginSuccess }) {
       }
     } catch {
       setError('Connection failed. Is the server running?');
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <h2 style={{ color: '#e7ecef' }}>Log In</h2>
-      <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-      <button type="submit">Log In</button>
+      <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" disabled={loading} />
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" disabled={loading} />
+      <button type="submit" disabled={loading}>
+        {loading ? 'Logging in...' : 'Log In'}
+      </button>
       {error && <p style={{ color: '#ff6b6b', fontSize: '13px' }}>{error}</p>}
     </form>
   );

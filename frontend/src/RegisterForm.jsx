@@ -7,10 +7,12 @@ function RegisterForm({ onRegisterSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setMessage('');
+    setLoading(true);
 
     try {
       const res = await fetch(`${API_URL}/register`, {
@@ -28,16 +30,20 @@ function RegisterForm({ onRegisterSuccess }) {
       }
     } catch {
       setMessage('Connection failed. Is the server running?');
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <h2 style={{ color: '#e7ecef' }}>Register</h2>
-      <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-      <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-      <button type="submit">Register</button>
+      <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" disabled={loading} />
+      <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" disabled={loading} />
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" disabled={loading} />
+      <button type="submit" disabled={loading}>
+        {loading ? 'Registering...' : 'Register'}
+      </button>
       {message && <p style={{ color: '#8b949c', fontSize: '13px' }}>{message}</p>}
     </form>
   );

@@ -1,6 +1,7 @@
-from services.mongo_service import get_history, list_user_sessions
 from dotenv import load_dotenv
 load_dotenv()
+
+from services.mongo_service import get_history, list_user_sessions
 
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
